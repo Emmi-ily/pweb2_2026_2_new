@@ -33,34 +33,43 @@ Route::post(
     [AlunoController::class, 'search']
 )->name('aluno.search');
 
+///////////////////////////    CURSO
+// O report precisa estar ACIMA do resource
+Route::get('/curso/report', 
+[\App\Http\Controllers\CursoController::class, 'report'])->name('curso.report');
+
+Route::get('/curso/report-matriculados', 
+[\App\Http\Controllers\CursoController::class, 'reportMatriculados'])->name('curso.reportMatriculados');
+
 Route::resource('curso', \App\Http\Controllers\CursoController::class);
 
-Route::get('/curso/{curso}/turmas',
- [\App\Http\Controllers\TurmaController::class, 'index'])->name('curso.turmas');
+Route::get('/curso/{curso}/turmas', [\App\Http\Controllers\TurmaController::class, 'index'])->name('curso.turmas'); //o index é o metodo ali, que vai chamar o metodo dentro do turmacontroller
 
-Route::get('/curso/{curso}/turmas/create',
- [\App\Http\Controllers\TurmaController::class, 'create'])->name('curso.turmas.create');
+Route::get('/curso/{curso}/turmas/create', [\App\Http\Controllers\TurmaController::class, 'create'])->name('curso.turmas.create');
 
 Route::post(
     '/curso/search',
-    [\App\Http\Controllers\CursoController::class, 'search']
+    [AlunoController::class, 'search']
 )->name('curso.search');
+//////////////////////////
+
 
 Route::resource('turma', \App\Http\Controllers\TurmaController::class);
 Route::post(
     '/turma/search',
-    [\App\Http\Controllers\TurmaController::class, 'search']
+    [AlunoController::class, 'search']
 )->name('turma.search');
+
 
 Route::resource('matricula', \App\Http\Controllers\MatriculaController::class);
 Route::post(
     '/matricula/search',
-    [\App\Http\Controllers\MatriculaController::class, 'search']
+    [AlunoController::class, 'search']
 )->name('matricula.search');
-
 /*
 Route::get('/aluno', function () {
-    return view('aluno.list');
+    return view('aluno
+    .list');
     //return "<h3>Olá mundo Laravel!</h3>";
 });
 */
