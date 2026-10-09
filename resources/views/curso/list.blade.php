@@ -23,7 +23,9 @@
                     <button type="submit" class="btn btn-primary">Buscar</button>
                     <a href="{{ url('curso/create') }}" class="btn btn-success"> Novo</a>
                     <a href="{{ url('curso/report') }}" class="btn btn-danger"> Relatório</a>
-                    <a href="{{ url('curso/report') }}" class="btn btn-danger"> Relatório Matriculados</a>
+                    <a href="{{ url('curso/report-matriculados') }}" class="btn btn-danger"> Relatório Matriculados</a>
+                    <a href="{{ url('curso/chart') }}" class="btn btn-warning"> Grafico</a>
+                    <a href="{{ url('curso/chart-qtd-aluno-curso-chart') }}" class="btn btn-warning"> Grafico matriculados</a>
                 </div>
             </div>
         </form>
@@ -59,8 +61,8 @@
                             <form action="{{ route('curso.destroy', $item->id) }}" method="post">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class='btn btn-danger' title='Exclur'
-                                    onclick='return confirm(\"Deseja Excluir?\")'>Deletar</button>
+                                <button type="submit" class='btn btn-danger' title='Excluir'
+                                    onclick='return confirm("Deseja Excluir?")'>Deletar</button>
                             </form>
                         </td>
                     </tr>

@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlunoController;
+use App\Http\Controllers\CursoController;
+use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\MatriculaController;
 
 Route::get('/', function () {
     return view('main');
 });
 
+###### aluno ########
 Route::get('/aluno', [AlunoController::class, 'index']);
 Route::get('/aluno/create', [AlunoController::class, 'create']);
 Route::post(
@@ -32,44 +36,53 @@ Route::post(
     '/aluno/search',
     [AlunoController::class, 'search']
 )->name('aluno.search');
+#################################################
 
-///////////////////////////    CURSO
+###### curso ########
 // O report precisa estar ACIMA do resource
 Route::get('/curso/report', 
-[\App\Http\Controllers\CursoController::class, 'report'])->name('curso.report');
+    [CursoController::class, 'report'])->name('curso.report');
 
 Route::get('/curso/report-matriculados', 
-[\App\Http\Controllers\CursoController::class, 'reportMatriculados'])->name('curso.reportMatriculados');
+    [CursoController::class, 'reportMatriculados'])->name('curso.reportMatriculados');
 
-Route::resource('curso', \App\Http\Controllers\CursoController::class);
+Route::get('/curso/chart', 
+    [CursoController::class, 'chart'])->name('curso.chart');
 
-Route::get('/curso/{curso}/turmas', [\App\Http\Controllers\TurmaController::class, 'index'])->name('curso.turmas'); //o index é o metodo ali, que vai chamar o metodo dentro do turmacontroller
-
-Route::get('/curso/{curso}/turmas/create', [\App\Http\Controllers\TurmaController::class, 'create'])->name('curso.turmas.create');
+Route::get('/curso/chart-qtd-aluno-curso-chart', 
+    [CursoController::class, 'chartQtdAlunoCurso'])->name('curso.qtdAlunoCursoChart');
 
 Route::post(
     '/curso/search',
-    [AlunoController::class, 'search']
-)->name('curso.search');
-//////////////////////////
+    [CursoController::class, 'search']
+)->name('curso.search'); // Corrigido controller, name e adicionado ';' no final
 
+Route::resource('curso', CursoController::class);
 
-Route::resource('turma', \App\Http\Controllers\TurmaController::class);
+Route::get('/curso/{curso}/turmas', [TurmaController::class, 'index'])->name('curso.turmas');
+Route::get('/curso/{curso}/turmas/create', [TurmaController::class, 'create'])->name('curso.turmas.create');
+#############################################
+
+###### turma ########
 Route::post(
     '/turma/search',
-    [AlunoController::class, 'search']
+    [TurmaController::class, 'search'] // Corrigido para TurmaController
 )->name('turma.search');
 
+Route::resource('turma', TurmaController::class);
 
-Route::resource('matricula', \App\Http\Controllers\MatriculaController::class);
+###### matricula ########
 Route::post(
     '/matricula/search',
-    [AlunoController::class, 'search']
+    [MatriculaController::class, 'search'] // Corrigido para MatriculaController
 )->name('matricula.search');
+
+Route::resource('matricula', MatriculaController::class);
+#################################################
+
 /*
 Route::get('/aluno', function () {
-    return view('aluno
-    .list');
+    return view('aluno.list');
     //return "<h3>Olá mundo Laravel!</h3>";
 });
 */
